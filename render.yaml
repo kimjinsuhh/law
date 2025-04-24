@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: taxlaw-proxy
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python taxlaw_proxy.py"
+    plan: free
+
