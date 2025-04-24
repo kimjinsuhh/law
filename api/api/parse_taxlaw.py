@@ -4,6 +4,9 @@ from bs4 import BeautifulSoup
 import httpx
 
 app = FastAPI()
+@app.get("/")
+async def root():
+    return {"status": "✅ API is alive and running!"}
 
 @app.get("/api/parse-taxlaw")
 async def parse_taxlaw(
