@@ -4,3 +4,4 @@ beautifulsoup4
 uvicorn[standard]  # 로컬 테스트용, Vercel에서는 자동 실행되므로 필요 없음
 python-multipart    # POST form 받을 때 필요할 수 있음
 flask
+requests
