@@ -12,18 +12,22 @@ def home():
 
 @app.route("/taxlaw/summary", methods=["GET"])
 def get_taxlaw_summary():
-    url = "https://taxlaw.nts.go.kr/is/USEISA003M.do"
+    # ✅ 소득세 관련 법령 고정 URL
+    url = "https://taxlaw.nts.go.kr/law/read/read.do?articleKey=1001000001"  # 이 값은 실제 소득세 관련 문서 URL로 바꾸세요
+
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
     }
+
     response = requests.get(url, headers=headers)
     soup = BeautifulSoup(response.text, 'html.parser')
 
-    content = soup.select_one("body")
-    summary = content.get_text(strip=True)[:1000] if content else "세법 콘텐츠를 찾을 수 없습니다."
+    # ✅ 실제 페이지 구조 확인 후 태그 선택자 수정 필요
+    content = soup.select_one("div#contentsArea")  # 또는 div.lawDetail, div#content 등 개발자도구(F12)로 확인 필요
+    summary = content.get_text(strip=True)[:1000] if content else "소득세 콘텐츠를 찾을 수 없습니다."
 
     return jsonify({
-        "title": "세법 콘텐츠 요약",
+        "title": "소득세 요약",
         "summary": summary
     })
 
