@@ -2,6 +2,7 @@
 from flask import Flask, jsonify
 import requests
 from bs4 import BeautifulSoup
+import os
 
 app = Flask(__name__)
 
@@ -18,14 +19,14 @@ def get_taxlaw_summary():
     response = requests.get(url, headers=headers)
     soup = BeautifulSoup(response.text, 'html.parser')
 
-    # 실제 HTML 구조에 맞게 selector 수정 필요
-    content = soup.select_one("body")  # 임시 선택자
-    if content:
-        summary = content.get_text(strip=True)[:1000]
-    else:
-        summary = "세법 콘텐츠를 찾을 수 없습니다."
+    content = soup.select_one("body")
+    summary = content.get_text(strip=True)[:1000] if content else "세법 콘텐츠를 찾을 수 없습니다."
 
     return jsonify({
         "title": "세법 콘텐츠 요약",
         "summary": summary
     })
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
