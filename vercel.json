@@ -1,14 +1,14 @@
 {
   "builds": [
     {
-      "src": "api/parse_taxlaw.py",
+      "src": "/api/api/parse_taxlaw.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
-      "src": "/api/parse-taxlaw",
-      "dest": "api/parse_taxlaw.py"
+      "src": "/api/api/parse-taxlaw",
+      "dest": "/api/api/parse_taxlaw.py"
     }
   ]
 }
