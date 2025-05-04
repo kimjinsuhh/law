@@ -3,7 +3,8 @@ from playwright.sync_api import sync_playwright
 
 def crawl():
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(headless=True)  # ✅ Render는 GUI 없음
+
         context = browser.new_context()
         page = context.new_page()
 
