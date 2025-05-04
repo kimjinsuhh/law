@@ -4,7 +4,6 @@ services:
     env: python
     buildCommand: |
       pip install -r requirements.txt
-      python -m playwright install chromium  # ✅ 핵심
+      python -m playwright install chromium  # ✅ 반드시 필요!
     startCommand: python main.py
     autoDeploy: false
-
