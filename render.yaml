@@ -1,8 +1,12 @@
 services:
   - type: web
-    name: taxlaw-proxy
+    name: taxlaw-crawler
     env: python
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "python taxlaw_proxy.py"
-    plan: free
-
+    buildCommand: |
+      pip install -r requirements.txt
+      playwright install
+    startCommand: python main.py
+    autoDeploy: false
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: 'TRUE'
