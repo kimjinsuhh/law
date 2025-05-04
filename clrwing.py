@@ -5,6 +5,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 import pandas as pd
 import time
+import chromedriver_autoinstaller
+chromedriver_autoinstaller.install()
 
 chrome_options = Options()
 chrome_options.add_argument("--headless")  # GUI 없이 실행
