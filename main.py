@@ -1,6 +1,6 @@
 # main.py
 from fastapi import FastAPI
-from clrwing.py import crawl
+from clrwing import crawl
 
 app = FastAPI()
 
