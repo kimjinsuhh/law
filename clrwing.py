@@ -2,10 +2,16 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
 import pandas as pd
 import time
 
-driver = webdriver.Chrome()
+chrome_options = Options()
+chrome_options.add_argument("--headless")  # GUI 없이 실행
+chrome_options.add_argument("--no-sandbox")  # Render 환경에 필요
+chrome_options.add_argument("--disable-dev-shm-usage")  # 메모리 문제 방지
+
+driver = webdriver.Chrome(options=chrome_options)
 url = 'https://taxlaw.nts.go.kr/qt/USEQTJ001M.do'
 driver.get(url)
 time.sleep(3)
