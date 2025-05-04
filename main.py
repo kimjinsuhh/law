@@ -1,5 +1,4 @@
-from crlw2 import crawl  # ✅ 파일명이 crlw2.py일 경우
-
+from crlw2 import crawl  # ✅ crlw2.py에서 가져옴
 
 if __name__ == "__main__":
-   crawl()
+    crawl()
