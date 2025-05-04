@@ -1,10 +1,9 @@
-import asyncio
 import pandas as pd
 from playwright.sync_api import sync_playwright
 
-def scrape_law_data():
+def crawl():
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)  # 일반 모드
+        browser = p.chromium.launch(headless=False)
         context = browser.new_context()
         page = context.new_page()
 
@@ -12,7 +11,6 @@ def scrape_law_data():
         page.goto(url)
         page.wait_for_timeout(3000)
 
-        # 컨테이너 찾기
         containers = page.locator('.substance_wrap')
         count = containers.count()
         print(f'총 {count}개의 항목 중 상위 10개만 수집합니다.')
@@ -22,8 +20,6 @@ def scrape_law_data():
         for idx in range(min(10, count)):
             try:
                 container = containers.nth(idx)
-
-                # 제목 클릭 전 데이터 수집
                 title = container.locator('.subs_title strong').inner_text()
                 doc_number = container.locator('.subs_detail li').nth(0).inner_text()
                 prod_date = container.locator('.subs_detail li').nth(1).inner_text()
@@ -32,13 +28,11 @@ def scrape_law_data():
                 summary_count = summary_elements.count()
                 summary_text = "\n".join([summary_elements.nth(i).inner_text() for i in range(summary_count)])
 
-                # 새 탭 감지
                 with context.expect_page() as new_page_info:
                     container.locator('.subs_title').click()
                 new_page = new_page_info.value
                 new_page.wait_for_load_state()
 
-                # 본문 수집
                 try:
                     new_page.wait_for_selector('.bo_body', timeout=5000)
 
@@ -70,13 +64,8 @@ def scrape_law_data():
                 print(f'[{idx+1}] ❌ 수집 실패: {e}')
                 continue
 
-        # JSON 저장
         df = pd.DataFrame(data_list)
         df.to_json('세법_질의회신_상세본문_playwright.json', orient='records', indent=2, force_ascii=False)
         print("✅ JSON 저장 완료: 세법_질의회신_상세본문_playwright.json")
 
         browser.close()
-
-# 실행
-if __name__ == "__main__":
-    scrape_law_data()
