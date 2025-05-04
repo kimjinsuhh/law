@@ -4,9 +4,6 @@ services:
     env: python
     buildCommand: |
       pip install -r requirements.txt
-      playwright install
+      playwright install chromium
     startCommand: python main.py
     autoDeploy: false
-    envVars:
-      - key: PYTHONUNBUFFERED
-        value: 'TRUE'
